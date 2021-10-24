@@ -1,5 +1,6 @@
 import { api } from '../../utils/index';
 import { Booking } from '../../types'
+import { FC } from 'react';
 
 
 const getBookingsByDate = async (date: Date) => {
