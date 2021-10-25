@@ -1,4 +1,4 @@
-import { QUERY_KEYS } from '../../constants/query-keys';
+import { QUERY_KEYS } from '../../contrants/query-keys';
 import { useQuery } from 'react-query';
 import { getRooms } from '../../api';
 import { Room } from '../../types';
