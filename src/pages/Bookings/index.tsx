@@ -3,13 +3,13 @@ import { useQuery } from 'react-query';
 import { getBookingsByDate } from "../../api";
 import { Layout } from "../../components/layout";
 import { Booking } from '../../types';
-import { FormEvent, FormEventHandler, useState } from 'react';
+import { FormEvent, FormEventHandler, useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import moment, { Moment } from "moment";
 import { DATE_FORMATS } from '../../contrants/date-formats';
 import { Col, FloatingLabel, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import { sortAlphabetically } from '../../hooks/filters';
+import { filterByCategory, sortAlphabetically } from '../../hooks';
 
 
 
@@ -26,31 +26,29 @@ const Bookings = () => {
         sortAlphabetically(bookings!);
     }
 
-        return (
+    useEffect(()=>{
+        filterByCategory(bookings!, category);
+        }, [category]);
+
+    return (
             <Layout>
-                <Form>
-                    <Row className="align-items-center mb-3">
-                        <FloatingLabel as={Col} controlId="floatingSelectGrid" label="Booking Date:">
-                            <Form.Control type="date" name="booking-date" id="bookingDate" 
-                            onChange={(e)=> setDate(moment(e.target.value))} />
-                        </FloatingLabel>    
-                        <FloatingLabel as={Col} controlId="floatingSelectGrid" label="Category:">
-                            <Form.Select value={category} aria-label="Categories"
-                            onChange={(e)=> setCategory(e.target.value)}>
-                                <option>All</option>
-                                <option value="1">Confort</option>
-                                <option value="2">Superior</option>
-                                <option value="3">Junior Suite</option>
-                                <option value="4">Senior Suite</option>
-                            </Form.Select>
-                        </FloatingLabel>
-                        <Col xs="auto" className="my-1" >
-                            <Form.Check type="checkbox" label="Alphabetical lastname order" 
-                            onChange={(e)=> setChecked(e.target.checked)} />
-                        </Col>
-                    </Row>
-                </Form>
-               
+                <form>
+                    <label htmlFor="date">Booking Date:</label>
+                    <input type="date" id="date"
+                    onChange={(e)=>setDate(moment(e.target.value))} />
+                    <label htmlFor="category">Category:</label>
+                    <select value="All" id="category"
+                     onChange={(e)=> setCategory(e.target.value)}>
+                        <option value="1">Confort</option>
+                        <option value="2">Superior</option>
+                        <option value="3">Junior Suite</option>
+                        <option value="4">Senior Suite</option>
+                    </select>
+                    <label htmlFor="alphabeticalOrder">Alphabetical lastname order</label>
+                    <input type="checkbox" id="alphabeticalOrder"
+                    onChange={(e)=> setChecked(e.target.checked)}/>
+                </form>
+
                 <h1>Bookings</h1>
                 <Table striped bordered hover>
                     <thead>

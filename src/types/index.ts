@@ -12,7 +12,7 @@ export type Booking = {
 
 export type Room = {
     id: number,
-    category: number,
+    category: string,
     max_occupancy: number,
     occupancy: number
 } 
