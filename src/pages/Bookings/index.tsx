@@ -3,14 +3,14 @@ import { useQuery } from 'react-query';
 import { getBookingsByDate } from "../../api";
 import { Layout } from "../../components/layout";
 import { Booking } from '../../types';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 // Form imports
 import moment, { Moment } from "moment";
 import { DATE_FORMATS } from '../../contrants/date-formats';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
