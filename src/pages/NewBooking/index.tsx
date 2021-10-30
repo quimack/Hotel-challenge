@@ -5,6 +5,7 @@ import { DatePicker } from '@mui/lab';
 import { FC, FormEvent, useState } from 'react';
 import moment, { Moment } from "moment";
 import { DATE_FORMATS } from '../../contrants/date-formats';
+import { Modal } from './helpers';
 
 
 const defaultValues = {
@@ -19,10 +20,12 @@ const defaultValues = {
 const NewBooking: FC = () => { 
 
     const [inputs, setInputs] = useState(defaultValues);
+    
 
     const handleSubmit = (e: FormEvent<HTMLElement>) => {
         e.preventDefault()
         console.log(inputs);
+
     }
 
     return (
@@ -43,7 +46,6 @@ const NewBooking: FC = () => {
                     defaultValue="First name"
                     onChange={(e)=> setInputs({...inputs, first_name: e.target.value })}
                     />
-                    
                     <TextField
                         required
                         id="outlined-required"
@@ -51,22 +53,6 @@ const NewBooking: FC = () => {
                         defaultValue="Last name"
                         onChange={(e)=> setInputs({...inputs, last_name: e.target.value })}
                         />
-                    <FormControl sx={{ m: 1, minWidth: 120 }}>
-                        <InputLabel id="demo-simple-select-readonly-label">Number of guests</InputLabel>
-                        <Select
-                        labelId="demo-simple-select-readonly-label"
-                        id="demo-simple-select-readonly"
-                        value={inputs.number_of_guests}
-                        label="Number of guests"
-                        onChange={(e)=> setInputs({...inputs, number_of_guests: e.target.value })}
-                        >
-                            <MenuItem value={1}>1</MenuItem>
-                            <MenuItem value={2}>2</MenuItem>
-                            <MenuItem value={3}>3</MenuItem>
-                            <MenuItem value={4}>4</MenuItem>
-                        </Select>
-                    </FormControl>
-                
                 </div>
                 <div>
                     <FormControl required>
@@ -85,6 +71,23 @@ const NewBooking: FC = () => {
                         renderInput={(params) => <TextField {...params} />}
                         />
                     </FormControl>
+                </div>
+                <div>
+                <FormControl sx={{ m: 1, minWidth: 200 }}>
+                        <InputLabel id="numberOfGuests">Number of guests</InputLabel>
+                        <Select
+                        labelId="numberOfGuests"
+                        id="number-of-guests"
+                        value={inputs.number_of_guests}
+                        label="Number of guests"
+                        onChange={(e)=> setInputs({...inputs, number_of_guests: e.target.value })}
+                        >
+                            <MenuItem value={1}>1</MenuItem>
+                            <MenuItem value={2}>2</MenuItem>
+                            <MenuItem value={3}>3</MenuItem>
+                            <MenuItem value={4}>4</MenuItem>
+                        </Select>
+                    </FormControl>
                     <TextField
                     id="outlined-number"
                     label="Price per night"
@@ -95,9 +98,8 @@ const NewBooking: FC = () => {
                     onChange={(e)=> setInputs({...inputs, price_per_night: e.target.value })}
                     />
                 </div>
-                <Button type="submit" variant="contained" color="success">
-                    Book
-                </Button>
+                
+                <Modal {...inputs}/>
             </Box>
         </Layout>
     )
