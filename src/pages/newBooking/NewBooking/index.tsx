@@ -1,11 +1,13 @@
 import { Box } from '@mui/system';
-import { Layout } from '../../components/layout';
+import { Layout } from '../../../components/layout';
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { DatePicker } from '@mui/lab';
-import { FC, FormEvent, useState } from 'react';
-import moment, { Moment } from "moment";
-import { DATE_FORMATS } from '../../contrants/date-formats';
-import { Modal } from './helpers';
+import { FC, useState } from 'react';
+import moment from "moment";
+import { Modal } from '../index';
+import { useMutation } from 'react-query';
+import { createNewBooking } from '../../../api';
+
 
 
 const defaultValues = {
@@ -20,12 +22,13 @@ const defaultValues = {
 const NewBooking: FC = () => { 
 
     const [inputs, setInputs] = useState(defaultValues);
-    
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleSubmit = (e: FormEvent<HTMLElement>) => {
-        e.preventDefault()
-        console.log(inputs);
+    const mutation = useMutation(createNewBooking);
 
+    const handleSubmit = () => {
+        setIsModalOpen(false);
+        mutation.mutate([{...inputs, price_per_night: parseInt(inputs.price_per_night), number_of_guests: parseInt(inputs.number_of_guests)}]);
     }
 
     return (
@@ -36,7 +39,7 @@ const NewBooking: FC = () => {
             sx={{'& .MuiTextField-root': { m: 1, width: '25ch' },}}
             noValidate
             autoComplete="off"
-            onSubmit={handleSubmit}
+            // onSubmit={handleSubmit}
             >
                 <div>
                     <TextField
@@ -73,33 +76,34 @@ const NewBooking: FC = () => {
                     </FormControl>
                 </div>
                 <div>
-                <FormControl sx={{ m: 1, minWidth: 200 }}>
-                        <InputLabel id="numberOfGuests">Number of guests</InputLabel>
-                        <Select
-                        labelId="numberOfGuests"
-                        id="number-of-guests"
-                        value={inputs.number_of_guests}
-                        label="Number of guests"
-                        onChange={(e)=> setInputs({...inputs, number_of_guests: e.target.value })}
-                        >
-                            <MenuItem value={1}>1</MenuItem>
-                            <MenuItem value={2}>2</MenuItem>
-                            <MenuItem value={3}>3</MenuItem>
-                            <MenuItem value={4}>4</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <TextField
-                    id="outlined-number"
-                    label="Price per night"
-                    type="number"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    onChange={(e)=> setInputs({...inputs, price_per_night: e.target.value })}
-                    />
+                    <FormControl sx={{ m: 1, minWidth: 200 }}>
+                            <InputLabel id="numberOfGuests">Number of guests</InputLabel>
+                            <Select
+                            labelId="numberOfGuests"
+                            id="number-of-guests"
+                            value={inputs.number_of_guests}
+                            label="Number of guests"
+                            onChange={(e)=> setInputs({...inputs, number_of_guests: e.target.value })}
+                            >
+                                <MenuItem value={1}>1</MenuItem>
+                                <MenuItem value={2}>2</MenuItem>
+                                <MenuItem value={3}>3</MenuItem>
+                                <MenuItem value={4}>4</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <TextField
+                        id="outlined-number"
+                        label="Price per night"
+                        type="number"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        onChange={(e)=> setInputs({...inputs, price_per_night: e.target.value })}
+                        />
                 </div>
-                
-                <Modal {...inputs}/>
+
+                <Button variant="contained" color="success" onClick={()=> setIsModalOpen(true)}>Submit</Button>
+                <Modal  handleAction={handleSubmit} isOpen={isModalOpen} closeModal={setIsModalOpen} formData={inputs}/>
             </Box>
         </Layout>
     )

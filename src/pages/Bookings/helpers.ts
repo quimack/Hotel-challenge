@@ -1,8 +1,6 @@
-import { useQuery } from "react-query";
-import { getRooms } from "../../api";
-import { QUERY_KEYS } from "../../contrants/query-keys";
+// import { getRooms } from "../../api";
+// import { QUERY_KEYS } from "../../contrants/query-keys";
 import { Booking, Room } from "../../types";
-
 
 
 // const filterByCategory = (bookings: Booking[], category: string) => {
@@ -10,7 +8,7 @@ import { Booking, Room } from "../../types";
 //     const rooms = async (): Promise<Room[]> =>{
 //         const response: Room[] = await getRooms();
 //         return response;
-//     }
+//     }  
     
 //     return bookings.filter(booking =>{
 //         rooms?.map((room: Room) => {
@@ -19,7 +17,7 @@ import { Booking, Room } from "../../types";
 //     } )
 // }
 
-
+// ALPHABETICAL ORDER
 const sortAlphabetically = (array: Booking[]) => {
     return array.sort((a,b) => {
         if (a.last_name < b.last_name) {

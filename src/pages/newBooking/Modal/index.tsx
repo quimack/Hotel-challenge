@@ -3,43 +3,35 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { FC, useState } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 import { Moment } from "moment";
-import { Divider, Stack, Paper } from '@mui/material';
+import { Stack, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { DATE_FORMATS } from '../../contrants/date-formats';
+import { DATE_FORMATS } from '../../../contrants/date-formats';
 
 
 //Modal Component
 type Props = {
-  first_name: string,
-  last_name: string,
-  check_in_date: Moment,
-  check_out_date: Moment,
-  number_of_guests: string,
-  price_per_night: string,
-  status?: string
+  isOpen: boolean,
+  closeModal: Dispatch<SetStateAction<boolean>>,
+  formData:{
+    first_name: string,
+    last_name: string,
+    check_in_date: Moment,
+    check_out_date: Moment,
+    number_of_guests: string,
+    price_per_night: string,
+    status?: string
+  },
+  handleAction: () => void
 }
 
-const Modal: FC<Props> = (
-  {first_name, last_name, check_in_date, check_out_date, number_of_guests, price_per_night, status}
-  ) => {
 
-    const total = () =>{
-      console.log((check_out_date.diff(check_in_date, 'days')));
-    }  
-    total();
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+const Modal: FC<Props> = ({
+isOpen, closeModal, handleAction, formData:
+{first_name, last_name, check_in_date, check_out_date, number_of_guests, price_per_night}
+}) => {
 
 // Booking data style 
   const Item = styled(Paper)(({ theme }) => ({
@@ -52,12 +44,9 @@ const Modal: FC<Props> = (
   return (
       
     <div>
-      <Button type="submit" variant="contained" color="success" onClick={handleClickOpen}>
-        Submit
-      </Button>
       <Dialog
-        open={open}
-        onClose={handleClose}
+        open={isOpen}
+        onClose={closeModal}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -79,8 +68,8 @@ const Modal: FC<Props> = (
           </DialogTitle>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose} autoFocus>Confirm</Button>
+          <Button onClick={()=> closeModal(false)}>Cancel</Button>
+          <Button variant="contained" color="success" onClick={handleAction} autoFocus>Confirm</Button>
         </DialogActions>
       </Dialog>
     </div>

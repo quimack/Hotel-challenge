@@ -26,8 +26,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+
 // Helpers imports
 import { sortAlphabetically } from './helpers';
+// import { Box } from '@mui/system';
 
 
 // Table customization 
@@ -93,7 +95,7 @@ const Bookings = () =>{
           label="Category"
           onChange={(e)=> setCategory(e.target.value)}
           >
-              <MenuItem value="">
+              <MenuItem value="All">
                 <em>All</em>
               </MenuItem>
               <MenuItem value={"Confort"}>Confort</MenuItem>
@@ -110,9 +112,10 @@ const Bookings = () =>{
           />
 
         </FormGroup>
-      </FormControl>
+      </FormControl> 
 
 {/* Table render */}
+
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
@@ -152,6 +155,7 @@ const Bookings = () =>{
           </TableBody>
         </Table>
       </TableContainer>
+
     </Layout>
   );
 }
