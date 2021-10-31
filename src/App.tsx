@@ -5,6 +5,8 @@ import { Bookings, Rooms, NewBooking } from './pages';
 import DateAdapter from '@mui/lab/AdapterMoment';
 import { LocalizationProvider } from '@mui/lab';
 
+import './styles/styles.css';
+
 const App = () => {
   return (
     <QueryClientProvider client={new QueryClient()}>
