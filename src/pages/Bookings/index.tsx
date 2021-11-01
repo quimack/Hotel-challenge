@@ -15,7 +15,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
-import { TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import { DatePicker } from '@mui/lab';
 // Table imports
 import { styled } from '@mui/material/styles';
@@ -26,6 +26,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
+import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 
 // Helpers imports
 import { sortAlphabetically } from './helpers';
@@ -55,7 +58,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 //Bookings component
-
 const Bookings = () =>{
 
     const [date, setDate] = useState<Moment>();
@@ -95,7 +97,7 @@ const Bookings = () =>{
           label="Category"
           onChange={(e)=> setCategory(e.target.value)}
           >
-              <MenuItem value="All">
+              <MenuItem value={"All"}>
                 <em>All</em>
               </MenuItem>
               <MenuItem value={"Confort"}>Confort</MenuItem>
@@ -107,7 +109,7 @@ const Bookings = () =>{
           <FormControlLabel
           control={<Checkbox 
               onChange={(e)=> setChecked(e.target.checked)}/>}
-          label="Alphabetical lastname order"
+          label="Alphabetical last name order"
           labelPlacement="start"
           />
 
@@ -115,7 +117,6 @@ const Bookings = () =>{
       </FormControl> 
 
 {/* Table render */}
-
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
@@ -125,6 +126,7 @@ const Bookings = () =>{
               </TableCell>
             </TableRow>
             <TableRow>
+                <StyledTableCell>Options</StyledTableCell>
                 <StyledTableCell>ID</StyledTableCell>
                 <StyledTableCell align="right">Status</StyledTableCell>
                 <StyledTableCell align="right">First name</StyledTableCell>
@@ -140,8 +142,22 @@ const Bookings = () =>{
             {bookings?.map((booking) => ( 
                 <StyledTableRow key={booking.id}>
                 <StyledTableCell component="th" scope="row">
-                    {booking.id}
+                
+                <Grid container direction="row" justifyContent="flex-start" >
+                  <Grid item xs={4}>
+                    <Button href={`/edit-booking?id=${booking.id}`} >
+                      <EditTwoToneIcon />
+                    </Button>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Button>
+                      <DeleteTwoToneIcon />
+                    </Button>
+                  </Grid>
+                  
+                </Grid>
                 </StyledTableCell>
+                <StyledTableCell align="right">{booking.id}</StyledTableCell>
                 <StyledTableCell align="right">{booking.booking_status}</StyledTableCell>
                 <StyledTableCell align="right">{booking.first_name}</StyledTableCell>
                 <StyledTableCell align="right">{booking.last_name}</StyledTableCell>

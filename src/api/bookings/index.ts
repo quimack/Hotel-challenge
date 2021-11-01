@@ -16,13 +16,25 @@ export const getBookingsByDate = async (date: Moment) => {
     } 
 }
 
+//Fetch booking by ID
+export const getBookingById = async (id: number) => {
+    try{
+        const response = await api.get<Booking>(`/bookings/${id}`);
+        console.log(response);
+        return response.data;
+    } catch (err) {
+        console.log(err);
+        throw new Error('There was a server error');
+    } 
+}
+
 
 //Post a new booking
 type Payload = Omit<Booking, 'id' | 'room_id' | 'booking_status'>[];
 
 export const createNewBooking = async (data: Payload) =>{
     try{
-        api.post('/bookings/create', {...data, status: 'confirmed'});
+        api.post('/bookings/create', {...data, booking_status: 'confirmed'});
     }catch (err){
         console.log(err);
         throw new Error('There was a server error');

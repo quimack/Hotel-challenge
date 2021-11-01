@@ -39,7 +39,6 @@ const NewBooking: FC = () => {
             sx={{'& .MuiTextField-root': { m: 1, width: '25ch' },}}
             noValidate
             autoComplete="off"
-            // onSubmit={handleSubmit}
             >
                 <div>
                     <TextField
