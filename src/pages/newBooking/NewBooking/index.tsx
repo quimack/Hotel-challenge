@@ -1,5 +1,5 @@
 import { Box } from '@mui/system';
-import { Layout } from '../../../components/layout';
+import { Layout } from '../../../components';
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { DatePicker } from '@mui/lab';
 import { FC, useState } from 'react';
@@ -7,7 +7,6 @@ import moment from "moment";
 import { Modal } from '../index';
 import { useMutation } from 'react-query';
 import { createNewBooking } from '../../../api';
-
 
 
 const defaultValues = {

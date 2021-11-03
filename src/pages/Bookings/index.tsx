@@ -1,7 +1,7 @@
 import { QUERY_KEYS } from '../../contrants/query-keys';
 import { useQuery } from 'react-query';
 import { getBookingsByDate } from "../../api";
-import { Layout } from "../../components/layout";
+import { Layout, LastMonthBookingsChart } from "../../components";
 import { Booking } from '../../types';
 import { useState } from 'react';
 // Form imports
@@ -18,10 +18,9 @@ import FormLabel from '@mui/material/FormLabel';
 import { Button, TextField } from '@mui/material';
 import { DatePicker } from '@mui/lab';
 // Table imports
-import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -29,32 +28,10 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
-
+import { StyledTableCell, StyledTableRow, Item } from '../../styles';
 // Helpers imports
 import { sortAlphabetically } from './helpers';
 // import { Box } from '@mui/system';
-
-
-// Table customization 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
 
 
 //Bookings component
@@ -64,7 +41,7 @@ const Bookings = () =>{
     const [category, setCategory] = useState<string>("All");
     const [checked, setChecked] = useState<boolean>(false);
 
-    const { data: bookings } = useQuery<Booking[]>(QUERY_KEYS.BOOKINGS, () => getBookingsByDate(date!));
+    const { data: bookings } = useQuery<Booking[]>(QUERY_KEYS.BOOKINGS_BY_DATE, () => getBookingsByDate(date!));
 
     if(checked){
         sortAlphabetically(bookings!);
@@ -76,47 +53,48 @@ const Bookings = () =>{
 
   return (
     <Layout>
-{/* Filter and order options */}
-      <FormControl sx={{ m: 1, minWidth: 120 }} component="fieldset">
-        <FormLabel component="legend">Bookings options</FormLabel>
-        <FormGroup aria-label="position" row>
-        <DatePicker
-          label="Bookings date"
-          value={date}
-          onChange={(newValue) => {
-            setDate(moment(newValue));
-          }}
-          renderInput={(params) => <TextField {...params} />}
-        />
+      <Grid container>
+      <Grid item xs={12}>
+        <Item>
+          {/* Filter and order options */}
+          <FormControl sx={{ m: 1, minWidth: 120 }} component="fieldset">
+            <FormLabel component="legend">Bookings options</FormLabel>
+            <FormGroup aria-label="position" row>
+              <DatePicker
+                label="Bookings date"
+                value={date}
+                onChange={(newValue) => {
+                  setDate(moment(newValue));
+                }}
+                renderInput={(params) => <TextField {...params} />}
+              />
+              <InputLabel id="category-select-label">Category</InputLabel>
+              <Select
+              labelId="category-select-label"
+              id="category-select"
+              value={category}
+              label="Category"
+              onChange={(e)=> setCategory(e.target.value)}
+                >
+                <MenuItem value={"All"}>
+                  <em>All</em>
+                </MenuItem>
+                <MenuItem value={"Confort"}>Confort</MenuItem>
+                <MenuItem value={"Superior"}>Superior</MenuItem>
+                <MenuItem value={"Junior Suite"}>Junior Suite</MenuItem>
+                <MenuItem value={"Senior Suite"}>Senior Suite</MenuItem>
+              </Select>
 
-          <InputLabel id="category-select-label">Category</InputLabel>
-          <Select
-          labelId="category-select-label"
-          id="category-select"
-          value={category}
-          label="Category"
-          onChange={(e)=> setCategory(e.target.value)}
-          >
-              <MenuItem value={"All"}>
-                <em>All</em>
-              </MenuItem>
-              <MenuItem value={"Confort"}>Confort</MenuItem>
-              <MenuItem value={"Superior"}>Superior</MenuItem>
-              <MenuItem value={"Junior Suite"}>Junior Suite</MenuItem>
-              <MenuItem value={"Senior Suite"}>Senior Suite</MenuItem>
-          </Select>
+              <FormControlLabel
+              control={<Checkbox 
+                  onChange={(e)=> setChecked(e.target.checked)}/>}
+              label="Alphabetical last name order"
+              labelPlacement="start"
+              />
+            </FormGroup>
+          </FormControl> 
 
-          <FormControlLabel
-          control={<Checkbox 
-              onChange={(e)=> setChecked(e.target.checked)}/>}
-          label="Alphabetical last name order"
-          labelPlacement="start"
-          />
-
-        </FormGroup>
-      </FormControl> 
-
-{/* Table render */}
+          {/* Table render */}
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
@@ -171,6 +149,18 @@ const Bookings = () =>{
           </TableBody>
         </Table>
       </TableContainer>
+
+      </Item>
+      </Grid>
+
+      <Grid item xs={10}>
+        <Item>
+          <h3>Last month fluctuations</h3>
+          <LastMonthBookingsChart />
+        </Item>
+      </Grid>
+
+    </Grid>
 
     </Layout>
   );

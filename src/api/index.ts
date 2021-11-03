@@ -1,2 +1,2 @@
 export { getRooms } from './rooms';
-export { getBookingsByDate, createNewBooking } from './bookings';
+export { getBookingsByDate, createNewBooking, getBookings } from './bookings';
