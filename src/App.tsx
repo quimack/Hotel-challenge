@@ -1,11 +1,13 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { Bookings, Rooms, NewBooking } from './pages';
+import { Bookings, Rooms, NewBooking, EditBooking } from './pages';
 import DateAdapter from '@mui/lab/AdapterMoment';
 import { LocalizationProvider } from '@mui/lab';
 
 import './styles/styles.css';
+
+
 
 const App = () => {
   return (
@@ -15,6 +17,7 @@ const App = () => {
           <Switch>
             <Route path="/bookings" component={Bookings} />
             <Route path="/new-booking" component={NewBooking} />
+            <Route path="/edit-booking" component={EditBooking} />
             <Route path="/" component={Rooms} />
           </Switch>
         </BrowserRouter>

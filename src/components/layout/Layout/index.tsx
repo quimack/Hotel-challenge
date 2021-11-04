@@ -1,7 +1,8 @@
-import { ThemeProvider } from "@mui/material"
-import { FC } from "react"
-import { Header, Main } from ".."
-import { theme } from '../../../styles'
+import { ThemeProvider } from "@mui/material";
+import { FC } from "react";
+import { theme } from "../../../styles";
+import { Header } from "../Header";
+import { Main } from "../Main";
 
 
 const Layout: FC = ({children}) => {
