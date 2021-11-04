@@ -6,14 +6,20 @@ import { Room } from '../../types';
 
 type Props = {
     room: Room,
-    onClick?: Dispatch<SetStateAction<number>>,
+    setRoom?: Dispatch<SetStateAction<number>>,
     className?: string
 }
 
-export const RoomCard: FC<Props> = ({room, onClick, className}) => {
+export const RoomCard: FC<Props> = ({room, setRoom, className}) => {
     // room.id === selectedRoom?
+    const handleClick = () => {
+        if(setRoom!){
+            setRoom(room.id);
+        }
+    }
+
     return(
-        <Card sx={{ minWidth: 200 }} className={className}>
+        <Card sx={{ minWidth: 200 }} className={className} onClick={handleClick}>
         <CardContent>
             <Typography variant="h6" component="div">
                 {`Room ID: ${room.id}`}

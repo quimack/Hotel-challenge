@@ -34,7 +34,7 @@ export const RoomsPaper: FC<Props> = ({selectedRoom, setRoom}) => {
             >
               {rooms?.map((room) => (
                 room.occupancy <= Number(0)?
-                  <RoomCard room={room} onClick={()=> setRoom(room?.id)} className="visible-cursor" />
+                  <RoomCard room={room} setRoom={setRoom} className="visible-cursor" />
                   :
                   <RoomCard room={room}/>
               ))}

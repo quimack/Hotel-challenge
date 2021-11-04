@@ -27,19 +27,32 @@ const EditBooking = () => {
     
 
     useEffect(() =>{
+        //Enable the room
+        if(updatedData && (updatedData.booking_status === "checked out" || updatedData.booking_status === "cancelled")){ 
+            setUpdatedData({
+                id: updatedData.id,
+                first_name: updatedData.first_name,       
+                last_name: updatedData.last_name, 
+                price_per_night: updatedData.price_per_night,
+                number_of_guests: updatedData.number_of_guests,
+                check_in_date: updatedData.check_in_date,
+                check_out_date: updatedData.check_out_date,     
+                booking_status: updatedData.booking_status  
+            })
+        }
+        //Assing the room
         if(updatedData){
-            console.log("hola room")
-            console.log(selectedRoom)
             setUpdatedData({...updatedData, room_id: selectedRoom})
         }
     }, [selectedRoom])    
 
+    //Submit updated booking
     const handleSubmit = () => {
         if(updatedData){
             mutation.mutate([updatedData]);
         }
    }
-   console.log(updatedData)
+
     return (
         updatedData?
         <Layout>

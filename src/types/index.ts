@@ -4,7 +4,7 @@ export type Booking = {
     id:	number,
     first_name: string,
     last_name: string, 
-    room_id: number, 	
+    room_id?: number, 	
     check_in_date: Moment,
     check_out_date: Moment,
     number_of_guests: number, 
