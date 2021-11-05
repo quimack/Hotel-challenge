@@ -4,7 +4,6 @@ import { Room } from '../../types'
 const getRooms = async () => {
     try{
         const response = await api.get<Room[]>('/rooms');
-        console.log(response);
         return response.data;
     } catch (err) {
         console.log(err);

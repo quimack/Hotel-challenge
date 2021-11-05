@@ -1,17 +1,16 @@
 import { useMutation, useQuery} from 'react-query';
-import { editBooking, getBookingById } from '../../../api/bookings';
-import { Layout } from '../../../components';
-import { QUERY_KEYS } from '../../../contrants/query-keys';
-import { Booking } from '../../../types';
+import { editBooking, getBookingById } from '../../api/bookings';
+import { Layout, RoomsPaper } from '../../components';
+import { QUERY_KEYS } from '../../contrants/query-keys';
+import { Booking } from '../../types';
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { DatePicker } from '@mui/lab';
 import { useState, useEffect } from 'react';
 import moment from "moment";
 import { Box } from '@mui/system';
-import { RoomsPaper } from '../';
 
 
-const EditBooking = () => {
+export const EditBooking = () => {
 
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
@@ -157,4 +156,3 @@ const EditBooking = () => {
     );
 }
 
-export { EditBooking };
