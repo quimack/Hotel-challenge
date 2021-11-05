@@ -1,24 +1,30 @@
-// import { getRooms } from "../../api";
-// import { QUERY_KEYS } from "../../contrants/query-keys";
 import { Booking, Room } from "../../types";
+import { Dispatch, SetStateAction } from 'react';
 
 
-// const filterByCategory = (bookings: Booking[], category: string) => {
-    
-//     const rooms = async (): Promise<Room[]> =>{
-//         const response: Room[] = await getRooms();
-//         return response;
-//     }  
-    
-//     return bookings.filter(booking =>{
-//         rooms?.map((room: Room) => {
-//             return (booking.room_id === room.id && room.category === category);
-//         })
-//     } )
-// }
+//Filter by category
+export const filterByCategory = (bookings: Booking[], rooms: Room[], category: string, filterCategory: Booking[], setFilterCategory: Dispatch<SetStateAction<Booking[] | undefined>>) => {
+  bookings?.map((booking) =>{
+    rooms?.map((room) =>{
+      if(booking.room_id === room.id && room.category === category){
+        setFilterCategory(filterCategory => [...filterCategory!, booking])
+      }
+    })
+  })
+}
 
-// ALPHABETICAL ORDER
-const sortAlphabetically = (array: Booking[]) => {
+    // setFilterCategory(  bookings?.filter(booking =>{
+    //    return ( rooms?.map((room: Room) => {        
+    //         if(booking.room_id === room.id && room.category === category){
+    //           console.log(`true ${booking.first_name}`)
+    //           return true;
+    //         };
+    //     }))} )
+    // )
+
+
+//Sort bookings alphabetically
+export const sortAlphabetically = (array: Booking[]) => {
     return array.sort((a,b) => {
         if (a.last_name < b.last_name) {
             return -1;
@@ -29,6 +35,3 @@ const sortAlphabetically = (array: Booking[]) => {
           return 0;
     });
 }
-
-export { sortAlphabetically };
-// export { filterByCategory };

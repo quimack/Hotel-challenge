@@ -1,12 +1,12 @@
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Room } from '../../../types';
+import { Room } from '../../types';
 import { useQuery } from 'react-query';
-import { QUERY_KEYS } from '../../../contrants/query-keys';
-import { getRooms } from '../../../api';
+import { QUERY_KEYS } from '../../contrants/query-keys';
+import { getRooms } from '../../api';
 import{ FC, Dispatch, SetStateAction } from 'react';
-import { RoomCard } from '../../../components';
+import { RoomCard } from '..';
 
 
 type Props={
