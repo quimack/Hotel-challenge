@@ -1,8 +1,14 @@
-import * as React from "react"
+import { Grid } from "@mui/material"
 
 export const NoBookingsImg = (props) => {
   return (
-      <>
+    <Grid 
+      container
+      direction="column"
+      justifyContent=""
+      spacing={6}
+    >
+      <Grid item>
         <svg
           data-name="Layer 1"
           xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +46,10 @@ export const NoBookingsImg = (props) => {
           <circle cx={433.636} cy={105.174} r={20} fill="#6c63ff" />
           <circle cx={433.636} cy={105.174} r={12.182} fill="#fff" />
         </svg>
-        <h4><em>There's no bookings</em></h4>
-        </>
+      </Grid>
+      <Grid item sx={{textAlign: "center", color: "primary.light"}}>
+        <h3><em>There's no bookings for today</em></h3>
+      </Grid>
+    </Grid>
   )
 }

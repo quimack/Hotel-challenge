@@ -8,7 +8,8 @@ import { Booking, Room } from '../../types';
 import { getRooms } from "../../api";
 import { PieChart, Pie, Cell } from 'recharts';
 import Brightness1Icon from '@mui/icons-material/Brightness1';
-
+import { Grid } from "@mui/material";
+import { Box } from '@mui/system';
 
 //Last month bookings chart
 export const LastMonthBookingsChart = () => {
@@ -25,45 +26,45 @@ export const LastMonthBookingsChart = () => {
   const [data, setData] = useState([
     {
       week: "First week",
-      YBookings: 0
+      bookings: 0
     },
     {
       week: "Second week",
-      YBookings: 0
+      bookings: 0
     },
     {
       week: "Third week",
-      YBookings: 0
+      bookings: 0
     },
     {
       week: "Fourth week",
-      YBookings: 0
+      bookings: 0
     }
     ])
 
   //Separatting last month bookings in four weeks, for X axis  
   useEffect(()=>{
     //Resetting to zero the bookings counter
-    data[0].YBookings = 0
-    data[1].YBookings = 0
-    data[2].YBookings = 0
-    data[3].YBookings = 0
+    data[0].bookings = 0
+    data[1].bookings = 0
+    data[2].bookings = 0
+    data[3].bookings = 0
 
     lastMonth?.map((booking) =>{
       if(moment(booking.check_in_date).isBetween(moment().date(0).date(1), moment().date(0).date(1).date(8))){
-        data[0].YBookings = data[0].YBookings + 1;
+        data[0].bookings = data[0].bookings + 1;
         setData(data);
       }
       if(moment(booking.check_in_date).isBetween(moment().date(0).date(1).date(9), moment().date(0).date(1).date(15))){
-        data[1].YBookings = data[1].YBookings + 1;
+        data[1].bookings = data[1].bookings + 1;
         setData(data);
       }
       if(moment(booking.check_in_date).isBetween(moment().date(0).date(1).date(15), moment().date(0).date(1).date(22))){
-        data[2].YBookings = data[2].YBookings + 1;
+        data[2].bookings = data[2].bookings + 1;
         setData(data);
       }
       if(moment(booking.check_in_date).isBetween(moment().date(0).date(1).date(22), moment().date(0))){
-        data[3].YBookings = data[3].YBookings + 1;
+        data[3].bookings = data[3].bookings + 1;
         setData(data);
       }
     })
@@ -71,13 +72,16 @@ export const LastMonthBookingsChart = () => {
 
 
     return(
-      <LineChart width={600} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-        <Line type="monotone" dataKey="YBookings" stroke="#8884d8" />
+      <Box sx={{bgcolor: "#F6FFE1", p: "2.5em", borderRadius: "10px", opacity: "0.9"}}>
+      <h2>Last month fluctuations</h2>
+      <LineChart width={500} height={250} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+        <CartesianGrid stroke="#aaa" strokeDasharray="5 5" />
+        <Line type="monotone" dataKey="bookings" stroke="#aaa" />
         <XAxis dataKey="week" />
         <YAxis /> 
         <Tooltip />
       </LineChart>
+      </Box>
     )
 };
 
@@ -127,30 +131,38 @@ export const RoomsChart = () => {
   }, [rooms])
 
   return(
-    <>
-    <PieChart width={400} height={400}>
-    <Pie
-        data={data}
-        cx={200}
-        cy={200}
-        labelLine={true}
-        label={renderCustomizedLabel}
-        outerRadius={80}
-        fill="#8884d8"
-        dataKey="value"
-    >
-        {rooms?.map((entry, index) => (
-        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-        ))}
-    </Pie>
-    </PieChart>
-    {/* Chart references */}
-    <h4>
-    <span>Occupied</span><span><Brightness1Icon fontSize="small" color="error"/></span>
-    </h4>
-    <h4>
-    <span>Available</span><span><Brightness1Icon fontSize="small" color="success"/></span>
-    </h4>
-    </>
+    <Grid
+      container
+      justifyContent="center"
+      alignItems="center">
+      <Grid item>
+        <PieChart width={400} height={400}>
+        <Pie
+            data={data}
+            cx={200}
+            cy={200}
+            labelLine={true}
+            label={renderCustomizedLabel}
+            outerRadius={80}
+            fill="#8884d8"
+            dataKey="value"
+        >
+            {rooms?.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+        </Pie>
+        </PieChart>
+      </Grid>
+      {/* Chart references */}
+      <Grid item>
+        <h3>Rooms occupancy</h3>
+        <h4>
+          <span>Occupied</span><span><Brightness1Icon fontSize="small" color="error"/></span>
+        </h4>
+        <h4>
+          <span>Available</span><span><Brightness1Icon fontSize="small" color="success"/></span>
+        </h4>
+      </Grid>
+    </Grid>
   )
 }

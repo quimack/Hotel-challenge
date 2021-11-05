@@ -19,14 +19,16 @@ const Rooms = () => {
       <Layout>
         <Grid
           container
-          direction="row"
+          direction="column"
           justifyContent="center"
           alignItems="center"
         >
           <Grid item>
-            <h2>Rooms</h2>
+            <h1>A L L • R O O M S</h1>
+          </Grid>
+          <Grid item>
             <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 700 }} aria-label="customized table">
+              <Table sx={{ minWidth: 300 }} aria-label="customized table">
                 <TableHead>
                   <TableRow>
                       <StyledTableCell>ID</StyledTableCell>

@@ -13,16 +13,6 @@ export const filterByCategory = (bookings: Booking[], rooms: Room[], category: s
   })
 }
 
-    // setFilterCategory(  bookings?.filter(booking =>{
-    //    return ( rooms?.map((room: Room) => {        
-    //         if(booking.room_id === room.id && room.category === category){
-    //           console.log(`true ${booking.first_name}`)
-    //           return true;
-    //         };
-    //     }))} )
-    // )
-
-
 //Sort bookings alphabetically
 export const sortAlphabetically = (array: Booking[]) => {
     return array.sort((a,b) => {

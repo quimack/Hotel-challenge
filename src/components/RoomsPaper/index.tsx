@@ -1,5 +1,4 @@
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Room } from '../../types';
 import { useQuery } from 'react-query';
@@ -20,27 +19,23 @@ export const RoomsPaper: FC<Props> = ({selectedRoom, setRoom}) => {
   const lightTheme = createTheme({ palette: { mode: 'light' } });
 
   return (
-    <Grid container spacing={2}>
-        <Grid item xs={4}>
-          <ThemeProvider theme={lightTheme}>
-            <Box
-              sx={{
-                p: 2,
-                bgcolor: 'background.default',
-                display: 'grid',
-                gridTemplateColumns: { md: '1fr 1fr 1fr 1fr' },
-                gap: 10,
-              }}
-            >
-              {rooms?.map((room) => (
-                room.occupancy <= Number(0)?
-                  <RoomCard room={room} setRoom={setRoom} className="visible-cursor" />
-                  :
-                  <RoomCard room={room}/>
-              ))}
-            </Box>
-          </ThemeProvider>
-        </Grid>
+    <>
+    <h2>Rooms availability:</h2>
+    <h3><em>Select one to enable "in house" booking status</em></h3>
+    <Grid container spacing={2} >
+      <ThemeProvider theme={lightTheme}>            
+          {rooms?.map((room) => (
+            room.occupancy <= Number(0)?
+            <Grid item sx={{cursor: "pointer"}}>
+              <RoomCard room={room} setRoom={setRoom} />
+            </Grid>
+            :
+            <Grid item>
+              <RoomCard room={room}/>
+            </Grid>
+          ))}
+      </ThemeProvider>
     </Grid>
+    </>
   );
 }

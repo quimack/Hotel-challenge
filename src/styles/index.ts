@@ -34,12 +34,15 @@ export const Item = styled(Paper)(({ theme }) => ({
 
 // Table customization 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.primary.light  ,
     color: theme.palette.common.white,
+    minWidth: 50,
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
+    minWidth: 50,
   },
 }));
 
