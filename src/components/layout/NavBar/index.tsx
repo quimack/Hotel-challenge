@@ -13,7 +13,7 @@ const NavBar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Hotel Administration
           </Typography>
-           <Button color='inherit' href="/">TODAY</Button>
+          <Button color='inherit' href="/">TODAY</Button>
           <Button color="inherit" href="/rooms">Rooms</Button>
           <Button color="inherit" href="/bookings">Bookings</Button>
           <Button color="inherit" href="/new-booking">+ New booking</Button>

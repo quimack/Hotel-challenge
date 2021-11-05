@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import { getBookingsByDate} from "../../api";
 import { Booking} from '../../types';
 import moment from "moment";
+import { Grid } from "@mui/material";
 
 
 
@@ -14,13 +15,23 @@ export const Today = () => {
 
     return(
         <Layout>    
-            <h1> T O D A Y </h1>
-            {bookings?
-            <BookingsTable bookings={bookings!} />
-            :
-            <NoBookingsImg width="35%" height="35%" />
-            }
-            <RoomsChart />
+            <Grid 
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center">
+                <Grid item>
+                    <h1>B O O K I N G S ▲ F O R  ▼  T O D A Y</h1>
+                </Grid>
+                <Grid item>
+                    {bookings?
+                    <BookingsTable bookings={bookings!} />
+                    :
+                    <NoBookingsImg width="60%" height="60%" />
+                    }
+                    <RoomsChart />
+                </Grid>
+            </Grid>
         </Layout>
     )
 }

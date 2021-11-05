@@ -4,9 +4,6 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import { StyledTableCell, StyledTableRow } from '../../styles';
 import { Booking } from '../../types';
@@ -23,12 +20,12 @@ type Props = {
 export const BookingsTable: FC<Props> = ({bookings}) => {
 
     return (
-            <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableContainer sx={{borderRadius: "10px"}}>
+            <Table sx={{ minWidth: 700 }} aria-label="customized table" >
             <TableHead>
                 <TableRow>
                 <TableCell align="center" colSpan={4}>
-                    <h1>Bookings</h1>
+                    <h1>▲ B O O K I N G S ▼</h1>
                 </TableCell>
                 </TableRow>
                 <TableRow>
@@ -48,20 +45,9 @@ export const BookingsTable: FC<Props> = ({bookings}) => {
                 {bookings?.map((booking) => ( 
                     <StyledTableRow key={booking.id}>
                     <StyledTableCell component="th" scope="row">
-                    
-                    <Grid container direction="row" justifyContent="flex-start" >
-                    <Grid item xs={4}>
                         <Button href={`/edit-booking?id=${booking.id}`} >
-                        <EditTwoToneIcon />
+                            <EditTwoToneIcon />
                         </Button>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Button>
-                        <DeleteTwoToneIcon />
-                        </Button>
-                    </Grid>
-                    
-                    </Grid>
                     </StyledTableCell>
                     <StyledTableCell align="right">{booking.id}</StyledTableCell>
                     <StyledTableCell align="right">{booking.booking_status}</StyledTableCell>

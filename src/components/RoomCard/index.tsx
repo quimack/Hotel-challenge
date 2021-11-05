@@ -19,7 +19,7 @@ export const RoomCard: FC<Props> = ({room, setRoom, className}) => {
     }
 
     return(
-        <Card sx={{ minWidth: 200 }} className={className} onClick={handleClick}>
+        <Card sx={{ minWidth: 50 }} className={className} onClick={handleClick}>
         <CardContent>
             <Typography variant="h6" component="div">
                 {`Room ID: ${room.id}`}

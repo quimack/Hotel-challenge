@@ -8,7 +8,7 @@ import { Dispatch, FC, SetStateAction } from 'react';
 import { Moment } from "moment";
 import { Stack, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { DATE_FORMATS } from '../../../contrants/date-formats';
+import { DATE_FORMATS } from '../../contrants/date-formats';
 
 
 //Modal Component
@@ -28,7 +28,7 @@ type Props = {
 }
 
 
-const Modal: FC<Props> = ({
+export const ConfirmNewBooking: FC<Props> = ({
 isOpen, closeModal, handleAction, formData:
 {first_name, last_name, check_in_date, check_out_date, number_of_guests, price_per_night}
 }) => {
@@ -75,5 +75,3 @@ isOpen, closeModal, handleAction, formData:
     </div>
   );
 }
-
-export { Modal };

@@ -11,21 +11,18 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
 import { TextField } from '@mui/material';
 import { DatePicker } from '@mui/lab';
 import Grid from '@mui/material/Grid';
-import { Item } from '../../styles';
 import { sortAlphabetically, filterByCategory } from './helpers';
-
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Bookings = () =>{
 
-  const queryBookings = useQuery<Booking[]>(QUERY_KEYS.BOOKINGS_BY_DATE, () => getBookingsByDate(date!));
-  const queryRooms = useQuery<Room[]>(QUERY_KEYS.ROOMS, getRooms);
-  const { data: bookings, isLoading } = queryBookings;
+  const queryBookings = useQuery<Booking[]>(QUERY_KEYS.BOOKINGS_BY_DATE, () => getBookingsByDate(date!), {enabled: false});
+  const queryRooms = useQuery<Room[]>(QUERY_KEYS.ROOMS, getRooms, {enabled: false});
+  const { data: bookings, isLoading, isError } = queryBookings;
   const { data: rooms } = queryRooms;
 
   // Filter and order 
@@ -35,7 +32,9 @@ const Bookings = () =>{
   const [filterCategory, setFilterCategory] = useState<Booking[] | undefined>([]);
 
   if(checked){
-    sortAlphabetically(filterCategory!);
+    if(filterCategory){
+      sortAlphabetically(filterCategory!);
+    }
   }
 
   useEffect(()=>{
@@ -46,20 +45,27 @@ const Bookings = () =>{
     }else{
       filterByCategory(bookings!, rooms!, category, filterCategory!, setFilterCategory!);
     }
-    
   }, [category, bookings, date]);
     
 
-
   return (
     <Layout>
-      <Grid container>
-      <Grid item xs={12}>
-        <Item>
-          {/* Filter and order options */}
-          <FormControl sx={{ m: 1, minWidth: 120 }} component="fieldset">
-            <FormLabel component="legend">Bookings options</FormLabel>
-            <FormGroup aria-label="position" row>
+      <Grid 
+        container
+        direction="column"
+        justifyContent="space-evenly"
+        alignItems="center"
+      >
+        {/* Filter and order options */}
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-evenly"
+          alignItems="flex-start"
+          sx={{mb: "5em",}}
+        >
+          <Grid item>
+            <FormControl sx={{ m: 1, minWidth: 120 }} component="fieldset">
               <DatePicker
                 label="Bookings date"
                 value={date}
@@ -68,6 +74,10 @@ const Bookings = () =>{
                 }}
                 renderInput={(params) => <TextField {...params} />}
               />
+            </FormControl>
+          </Grid>
+          <Grid item>
+            <FormControl sx={{ m: 1, minWidth: 120 }} component="fieldset">
               <InputLabel id="category-select-label">Category</InputLabel>
               <Select
               labelId="category-select-label"
@@ -84,40 +94,51 @@ const Bookings = () =>{
                 <MenuItem value={"Junior Suite"}>Junior Suite</MenuItem>
                 <MenuItem value={"Senior Suite"}>Senior Suite</MenuItem>
               </Select>
-
-              <FormControlLabel
+            </FormControl>
+          </Grid>
+          <Grid item>
+            <FormControlLabel
               control={<Checkbox 
-                  onChange={(e)=> setChecked(e.target.checked)}/>}
-              label="Alphabetical last name order"
-              labelPlacement="start"
-              />
-            </FormGroup>
-          </FormControl> 
+                onChange={(e)=> setChecked(e.target.checked)}/>}
+              label="Sort alphabetically"
+              labelPlacement="end"
+              sx={{mt: "8px",}}
+            />
+          </Grid>
+        </Grid>
 
-          {/* Table render */}
-          {/* {isLoading?
-          Cargando...
-
-          } */}
-          {filterCategory?
+        {/* Table render */}
+        { isLoading?
+        <Grid item sx={{my: "5em",}}>
+          <CircularProgress />
+        </Grid>
+        :
+        isError? 
+        <Grid item sx={{mb: "5em",}}>
+          <NoBookingsImg width="80%" height="80%" /> 
+        </Grid>
+        :
+        <Grid item>
           <BookingsTable bookings={filterCategory!} />
-          :
-          <NoBookingsImg width="35%" height="35%" />
-          }
-      </Item>
+        </Grid>
+        }
       </Grid>
       
       {/* Chart */}
-      <Grid item xs={10}>
-        <Item>
-          <h3>Last month fluctuations</h3>
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        sx={{my: "5em", bgcolor: "primary.light", borderRadius: "10px",}}
+        >
+        <Grid item>
           <LastMonthBookingsChart />
-        </Item>
+        </Grid>
       </Grid>
 
-    </Grid>
-
     </Layout>
+    
   );
 }
 
